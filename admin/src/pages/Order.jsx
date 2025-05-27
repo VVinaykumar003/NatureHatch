@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { backendUrl } from '../App';
+import api from '../Services/api';
 
 const Order = () => {
   const [list, setList] = useState([]);
@@ -10,7 +11,8 @@ const Order = () => {
   const fetchList = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${backendUrl}/api/order/get-all-orders`);
+      const response = await api.get(`/order/get-all-orders`);
+      console.log("Response data:", response.data);
       if (response.data) {
         setList(response.data);
         toast.success('Orders fetched successfully');

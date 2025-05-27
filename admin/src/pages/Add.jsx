@@ -3,6 +3,7 @@ import { Upload, FileImage, DollarSign, ShoppingBag, AlignLeft, Tag, Loader } fr
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../Services/api';
 
 const Add = ({ token }) => {
   const [productName, setProductName] = useState('');
@@ -42,9 +43,17 @@ const Add = ({ token }) => {
     formData.append('category', category);
 
     try {
-      await axios.post('http://localhost:5000/api/products/create-product', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+
+      
+       await api.post('/products/create-product', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
       });
+      // await axios.post('http://localhost:5000/api/products/create-product', formData, {
+      //   headers: { 'Content-Type': 'multipart/form-data' },
+      // });
 
       toast.success('Product added successfully!');
       setProductName('');

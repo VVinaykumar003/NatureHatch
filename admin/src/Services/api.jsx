@@ -1,19 +1,14 @@
-// src/Services/api.js
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
 // Determine the API URL based on the environment
-
 const API_URL =
   import.meta.env.VITE_NODE_ENV === "production"
-    ?  `${import.meta.env.VITE_PRODUCTION_URL}/api` 
-    :`${import.meta.env.VITE_DEVELOPMENT_URL}/api` ;
-
+    ? `${import.meta.env.VITE_PRODUCTION_URL}/api`
+    : `${import.meta.env.VITE_DEVELOPMENT_URL}/api`;
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true, // optional, for sending cookies
 });
 
 // Request interceptor
@@ -45,7 +40,7 @@ api.interceptors.response.use(
     if (status === 403) {
       toast.error("You don't have permission to perform this action.");
     } else if (status === 404) {
-      toast.error("Requested resource not found.");
+      toast.error("Requested blog not found.");
     } else if (status >= 500) {
       toast.error("Server error! Please try again later.");
     } else if (status >= 400) {
@@ -56,4 +51,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api; // ✅ Exporting the axios instance, not just the URL
+export default api;

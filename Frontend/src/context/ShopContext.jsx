@@ -2,13 +2,14 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../Services/api";
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
   const currency = "₹";
   const delivery_fee = 10;
-  const backendUrl = import.meta.env.VITE_DEVELOPMENT_URL || "http://localhost:5000";
+  // const backendUrl = import.meta.env.VITE_DEVELOPMENT_URL || import.meta.env.VITE_PRODUCTION_URL ;
 
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
@@ -60,8 +61,8 @@ const ShopContextProvider = (props) => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        `${backendUrl}/api/user/add-to-cart`,
+      await api.post(
+        `/user/add-to-cart`,
         { productId: itemId, quantity: String(quantity) },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -78,7 +79,7 @@ const ShopContextProvider = (props) => {
   const fetchCartFromServer = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${backendUrl}/api/user/cart`, {
+      const response = await api.get(`/user/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -115,8 +116,8 @@ const ShopContextProvider = (props) => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        `${backendUrl}/api/user/update-cart`,
+      await api.post(
+        `/user/update-cart`,
         {
           productId,
           quantity: String(quantity),
@@ -145,8 +146,8 @@ const ShopContextProvider = (props) => {
 
   try {
     const token = localStorage.getItem("token");
-    await axios.post(
-      `${backendUrl}/api/user/clear-item`,
+    await api.post(
+      `/user/clear-item`,
       { productId },
       {
         headers: {
@@ -186,7 +187,7 @@ const ShopContextProvider = (props) => {
   // ---------------------------
   const getProductsData = async () => {
     try {
-      const res = await axios.get(`${backendUrl}/api/products/get-all-products`);
+      const res = await api.get(`/products/get-all-products`);
       setProducts(res.data);
     } catch (error) {
       console.error("Fetch products error:", error.message);
@@ -221,7 +222,6 @@ const ShopContextProvider = (props) => {
     addToCart,
     updateQuantity,
     getCartAmount,
-    backendUrl,
     token,
     setToken,
     navigate,
