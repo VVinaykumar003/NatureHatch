@@ -1,4 +1,5 @@
 import axios from "axios";
+// This file configures the Axios instance for API requests in a React application.
 import { toast } from "react-toastify";
 
 // Determine the API URL based on the environment
