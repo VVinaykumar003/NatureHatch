@@ -24,7 +24,7 @@ const AboutUs = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="text-2xl md:text-3xl font-light mb-6"
             >
-              ORGANIC FREE RANGE
+              ORGANIC FREE RANGE.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
