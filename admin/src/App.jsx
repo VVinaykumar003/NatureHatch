@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar'; // Corrected typo
 import Sidebar from './components/sidebar';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, replace} from 'react-router-dom';
 import Add from './pages/Add';
 import List from './pages/List';
 import Orders from './pages/Order';
@@ -11,9 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const backendUrl = import.meta.env.VITE_DEVELOPMENT_URL;
 export const currency = '₹';
+// const navigate=  useNavigate() ;
 
 const ProtectedRoute = ({ token, children }) => {
-  return token ? children : <Navigate to="/" replace />;
+  return token ? children : <Navigate to={'/'} replace/>;
 };
 
 const App = () => {
